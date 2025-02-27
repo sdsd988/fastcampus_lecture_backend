@@ -14,6 +14,9 @@ public class User {
 
 
     public User(Long id, UserInfo info) {
+        if(info == null) {
+            throw new IllegalArgumentException("info cannot be null");
+        }
         this.id = id;
         this.info = info;
         this.followingCounter = new PositiveIntegerCounter();
