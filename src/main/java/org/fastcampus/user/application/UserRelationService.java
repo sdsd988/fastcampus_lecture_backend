@@ -34,7 +34,7 @@ public class UserRelationService {
             throw new IllegalArgumentException();
         }
 
-        user.follow(target);
+        user.unfollow(target);
         userRelationRepository.save(user, target);
     }
 }

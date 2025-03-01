@@ -28,7 +28,7 @@ public class User {
             throw new IllegalArgumentException();
         }
 
-        followerCounter.increase();
+        followingCounter.increase();
         targetUser.increaseFollowerCounter();
     }
 
@@ -51,6 +51,18 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public UserInfo getInfo() {
+        return info;
+    }
+
+    public int getFollowingCounter() {
+        return followingCounter.getCount();
+    }
+
+    public int getFollowerCounter() {
+        return followerCounter.getCount();
     }
 
     @Override
