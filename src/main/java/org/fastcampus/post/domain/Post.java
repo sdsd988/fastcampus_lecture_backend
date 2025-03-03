@@ -1,5 +1,7 @@
 package org.fastcampus.post.domain;
 
+import lombok.Builder;
+import lombok.Getter;
 import org.fastcampus.common.domain.PositiveIntegerCounter;
 import org.fastcampus.post.domain.content.Content;
 import org.fastcampus.post.domain.content.PostContent;
@@ -7,6 +9,7 @@ import org.fastcampus.post.domain.content.PostPublicationState;
 import org.fastcampus.user.domain.User;
 
 
+@Getter
 public class Post {
 
     /**
@@ -14,7 +17,6 @@ public class Post {
      */
     private Long id;
     private final User author;
-//    private final Long authorId;
     private final Content content;
     private final PositiveIntegerCounter likeCount;
     private PostPublicationState state;
@@ -23,17 +25,18 @@ public class Post {
         return new Post(id, author, new PostContent(content), state);
     }
 
-    public Post(Long id, User author, Content content) {
-        this(id, author, content, PostPublicationState.PUBLIC);
+    public static Post createDefaultPost(Long id, User author, String content) {
+        return new Post(id,author,new PostContent(content),PostPublicationState.PUBLIC);
     }
 
+
+    @Builder
     public Post(Long id, User author, Content content,PostPublicationState state) {
         if(author == null){
             throw new IllegalArgumentException("author is null");
         }
         this.id = id;
         this.author = author;
-//        this.authorId = author.getId();
         this.content = content;
         this.likeCount = new PositiveIntegerCounter();
         this.state = state;
@@ -56,5 +59,13 @@ public class Post {
         }
         this.state = state;
         this.content.updateContent(updateContent);
+    }
+
+    public String getContentText() {
+        return getContent().getContentText();
+    }
+
+    public int getLikeCount() {
+        return likeCount.getCount();
     }
 }
